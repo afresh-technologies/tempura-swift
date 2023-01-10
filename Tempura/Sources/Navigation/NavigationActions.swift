@@ -91,7 +91,7 @@ public struct Show: NavigationSideEffect {
   public func anySideEffect(_ context: AnySideEffectContext) throws -> Any {
     guard let dependencies = context.anyDependencies as? NavigationProvider
     else { fatalError("DependenciesContainer must conform to `NavigationProvider`") }
-    try Hydra.await(dependencies.navigator.show(self.identifiersToShow, animated: self.animated, context: self.context))
+    try Hydra.await(in: .userInteractive, dependencies.navigator.show(self.identifiersToShow, animated: self.animated, context: self.context))
     return ()
   }
 }
