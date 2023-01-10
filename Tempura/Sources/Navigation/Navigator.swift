@@ -302,9 +302,12 @@ public class Navigator {
 
     // if there is no route in common, ask the UIApplication to handle that
     if commonRouteIndex < 0 {
-      // swiftlint:disable:next force_unwrapping
-      let change = RouteChange.rootChange(from: old.first!.routeIdentifier, to: new.first!)
-      return [change]
+      if let fromIdentifier = old.first?.routeIdentifier, let toIdentifier = new.first {
+        let change = RouteChange.rootChange(from: fromIdentifier, to: toIdentifier)
+        return [change]
+      }
+
+      return []
     }
 
     // case 1 we need to HIDE elements because we are in a situation like this:
