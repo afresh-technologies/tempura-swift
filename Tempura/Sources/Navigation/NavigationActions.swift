@@ -35,7 +35,7 @@ public struct Navigate: NavigationSideEffect {
   public func anySideEffect(_ context: AnySideEffectContext) throws -> Any {
     guard let dependencies = context.anyDependencies as? NavigationProvider
     else { fatalError("DependenciesContainer must conform to `NavigationProvider`") }
-    try Hydra.await(dependencies.navigator.changeRoute(newRoute: self.route, animated: self.animated, context: self.context))
+    try Hydra.wait(dependencies.navigator.changeRoute(newRoute: self.route, animated: self.animated, context: self.context))
     return ()
   }
 }
@@ -91,7 +91,7 @@ public struct Show: NavigationSideEffect {
   public func anySideEffect(_ context: AnySideEffectContext) throws -> Any {
     guard let dependencies = context.anyDependencies as? NavigationProvider
     else { fatalError("DependenciesContainer must conform to `NavigationProvider`") }
-    try Hydra.await(dependencies.navigator.show(self.identifiersToShow, animated: self.animated, context: self.context))
+    try Hydra.wait(dependencies.navigator.show(self.identifiersToShow, animated: self.animated, context: self.context))
     return ()
   }
 }
@@ -161,7 +161,7 @@ public struct Hide: NavigationSideEffect {
     guard let dependencies = context.anyDependencies as? NavigationProvider
     else { fatalError("DependenciesContainer must conform to `NavigationProvider`") }
     try Hydra
-      .await(
+      .wait(
         dependencies.navigator
           .hide(self.identifierToHide, animated: self.animated, context: self.context, atomic: self.atomic)
       )
